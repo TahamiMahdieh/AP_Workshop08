@@ -31,7 +31,10 @@ public class Manager {
         System.out.println("the note has been removed");
         //A list of notes should be displayed from main function using "show_list_of_notes_from_file()"
     }
-    public void Notes_show(int index){}
+    public void show_Notes(int index){
+        this.notes = get_previous_notes_from_file("notes.txt");
+        System.out.println(this.notes.get(index - 1).getText());
+    }
     public void export(int index){}
 
     private boolean check_for_repetitive_topic(String topic){
