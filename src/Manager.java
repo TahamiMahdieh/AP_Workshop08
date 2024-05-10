@@ -23,7 +23,14 @@ public class Manager {
         //printing a message
         System.out.println("A new note has been added");
     }
-    public void remove(int index){}
+    public void remove(int index){
+        this.notes = get_previous_notes_from_file("notes.txt");
+        this.notes.remove(index - 1);
+        write_into_file("notes.txt");
+        //printing a message
+        System.out.println("the note has been removed");
+        //A list of notes should be displayed from main function using "show_list_of_notes_from_file()"
+    }
     public void Notes_show(int index){}
     public void export(int index){}
 
@@ -43,7 +50,7 @@ public class Manager {
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }
-    private ArrayList<Note> get_previous_notes_from_file(String fileName){
+    public ArrayList<Note> get_previous_notes_from_file(String fileName){
         File file = new File(fileName);
         ArrayList<Note> noteArrayList = new ArrayList<>();
         if (file.length() > 0){
@@ -83,6 +90,12 @@ public class Manager {
         }
         catch (IOException e){
             e.printStackTrace();
+        }
+    }
+    public void show_list_of_notes_from_file(){
+        ArrayList<Note> noteArrayList = get_previous_notes_from_file("notes.txt");
+        for (int i = 0; i < noteArrayList.size(); i++) {
+            System.out.println(i+1 + "- " + noteArrayList.get(i).getTopic() + "\t" + noteArrayList.get(i).getDate());
         }
     }
 }
