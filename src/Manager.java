@@ -14,9 +14,31 @@ public class Manager {
         }
     }
 
-
     public ArrayList<Note> getNotes() {
         return notes;
+    }
+    public void export(int index, int counter){
+        this.notes = get_previous_notes_from_file("notes.txt");
+        FileWriter fileWriter = null;
+        PrintWriter out = null;
+        if (index < 1 || index > notes.size()){
+            System.out.println("invalid index. please try again");
+            return;
+        }
+        try {
+            fileWriter = new FileWriter("exportedfile" + counter + ".txt");
+            out = new PrintWriter(fileWriter);
+            Note n = notes.get(index);
+            out.println(n.getTopic());
+            out.println(n.getDate());
+            out.println(n.getText());
+            System.out.println("exported successfully. you can find it in " + "exportedfile" + counter + ".txt");
+            out.close();
+            fileWriter.close();
+        }
+        catch (IOException e){
+            System.out.println("export was not successful. please try again");
+        }
     }
     public void add_note(String topic, String text){
         if (check_for_repetitive_topic(topic))
@@ -47,8 +69,6 @@ public class Manager {
         else
             System.out.println(this.notes.get(index - 1).getText());
     }
-    public void export(int index){}
-
     private boolean check_for_repetitive_topic(String topic){
         //checking if the topic s repetitive or not
         for (Note i: notes){
