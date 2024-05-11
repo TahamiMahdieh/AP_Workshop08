@@ -1,10 +1,19 @@
 import java.io.*;
+import java.sql.SQLOutput;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.time.*;
 
 public class Manager {
     private ArrayList<Note> notes = new ArrayList<>();
+
+    public Manager() {
+        //getting the previous notes from the "notes.txt" file
+        if (get_previous_notes_from_file("notes.txt") != null){
+            notes = get_previous_notes_from_file("notes.txt");
+        }
+    }
+
 
     public ArrayList<Note> getNotes() {
         return notes;
@@ -13,10 +22,6 @@ public class Manager {
         if (check_for_repetitive_topic(topic))
             return;
         Note note = new Note(topic,return_current_date(),text);
-        //getting the previous notes from the "notes.txt" file
-        if (get_previous_notes_from_file("notes.txt") != null){
-            notes = get_previous_notes_from_file("notes.txt");
-        }
         notes.add(note);
         //Writing the new arraylist of notes into the "notes.txt" file
         write_into_file("notes.txt");
@@ -25,6 +30,10 @@ public class Manager {
     }
     public void remove(int index){
         this.notes = get_previous_notes_from_file("notes.txt");
+        if (index <= 0 || index > notes.size()){
+            System.out.println("invalid index! please try again");
+            return;
+        }
         this.notes.remove(index - 1);
         write_into_file("notes.txt");
         //printing a message
@@ -33,7 +42,10 @@ public class Manager {
     }
     public void show_Notes(int index){
         this.notes = get_previous_notes_from_file("notes.txt");
-        System.out.println(this.notes.get(index - 1).getText());
+        if (index > notes.size() || index < 1)
+            System.out.println("invalid index! pleas try again");
+        else
+            System.out.println(this.notes.get(index - 1).getText());
     }
     public void export(int index){}
 
