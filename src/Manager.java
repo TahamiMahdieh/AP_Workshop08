@@ -28,7 +28,7 @@ public class Manager {
         try {
             fileWriter = new FileWriter("exportedfile" + counter + ".txt");
             out = new PrintWriter(fileWriter);
-            Note n = notes.get(index);
+            Note n = notes.get(index - 1);
             out.println(n.getTopic());
             out.println(n.getDate());
             out.println(n.getText());
@@ -65,7 +65,7 @@ public class Manager {
     public void show_Notes(int index){
         this.notes = get_previous_notes_from_file("notes.txt");
         if (index > notes.size() || index < 1)
-            System.out.println("invalid index! pleas try again");
+            System.out.println("Invalid index! Please try again");
         else
             System.out.println(this.notes.get(index - 1).getText());
     }
@@ -130,7 +130,7 @@ public class Manager {
     public void show_list_of_notes_from_file(){
         ArrayList<Note> noteArrayList = get_previous_notes_from_file("notes.txt");
         for (int i = 0; i < noteArrayList.size(); i++) {
-            System.out.println(i+1 + "- " + noteArrayList.get(i).getTopic() + "\t" + noteArrayList.get(i).getDate());
+            System.out.println(i+1 + ". " + noteArrayList.get(i).getTopic() + "\t" + noteArrayList.get(i).getDate());
         }
     }
 }
